@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المتصدرون — منصة تحفيظ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-wrap">
+
+  <!-- شريط جانبي -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo-ico"><i class="fa-solid fa-mosque"></i></div>
+      <div>
+        <div class="sb-title">منصة تحفيظ</div>
+        <div class="sb-sub">حلقة الشيخ أحمد</div>
+      </div>
+    </div>
+    <div class="sb-user">
+      <div class="u-av">ي</div>
+      <div>
+        <div class="u-name">يوسف العمري</div>
+        <div class="u-role">طالب · المستوى الثالث</div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-grp-lbl">القائمة الرئيسية</div>
+      <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> لوحة التحكم</a>
+      <a href="schedule.html" class="nav-link"><i class="fa-solid fa-calendar-week"></i> الجدول الأسبوعي</a>
+      <a href="leaderboard.html" class="nav-link active"><i class="fa-solid fa-trophy"></i> المتصدرون</a>
+      <a href="challenges.html" class="nav-link"><i class="fa-solid fa-bolt"></i> التحديات <span class="nav-pill a">٢</span></a>
+      <div class="nav-grp-lbl">الأدوات</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-message"></i> الرسائل <span class="nav-pill">٣</span></a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-chart-bar"></i> تقدمي</a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-medal"></i> إنجازاتي</a>
+      <div class="nav-grp-lbl">المعلم</div>
+      <a href="teacher.html" class="nav-link"><i class="fa-solid fa-chalkboard-user"></i> لوحة المعلم</a>
+      <div class="nav-grp-lbl">الحساب</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i> الإعدادات</a>
+    </nav>
+    <div class="sb-footer">
+      <a href="index.html" class="nav-link" style="border-radius:var(--radius-sm)"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</a>
+    </div>
+  </aside>
+
+  <!-- منطقة رئيسية -->
+  <div class="main-area">
+    <div class="topbar">
+      <div class="topbar-info">
+        <h2>لوحة المتصدرين</h2>
+        <p>حلقة الشيخ أحمد — ١٢ طالب</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="ico-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></div>
+        <div class="u-av" style="cursor:pointer">ي</div>
+      </div>
+    </div>
+
+    <div class="page-body">
+
+      <!-- تبويبات -->
+      <div id="tabs-leaderboard">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem" class="fi">
+          <div class="tabs-bar">
+            <button class="tab-btn active" data-tab="tab-week">هذا الأسبوع</button>
+            <button class="tab-btn" data-tab="tab-month">هذا الشهر</button>
+            <button class="tab-btn" data-tab="tab-all">الكل</button>
+          </div>
+          <span class="badge badge-g"><i class="fa-solid fa-users"></i> ١٢ مشارك</span>
+        </div>
+
+        <!-- أسبوع -->
+        <div id="tab-week" class="tab-panel active">
+          <!-- منصة -->
+          <div class="card fi fi-1" style="margin-bottom:1rem">
+            <div class="podium-wrap">
+              <!-- المركز الثاني -->
+              <div class="podium-entry rank-2">
+                <div class="p-av">س</div>
+                <div class="p-name">سارة القحطاني</div>
+                <div class="p-score">٨٤٠ نقطة</div>
+                <div class="p-block">🥈</div>
+              </div>
+              <!-- المركز الأول -->
+              <div class="podium-entry rank-1">
+                <div class="p-av">م</div>
+                <div class="p-name">محمد الزهراني</div>
+                <div class="p-score">٩٨٠ نقطة</div>
+                <div class="p-block">🥇</div>
+              </div>
+              <!-- المركز الثالث -->
+              <div class="podium-entry rank-3">
+                <div class="p-av">ي</div>
+                <div class="p-name">يوسف العمري</div>
+                <div class="p-score">٧٦٠ نقطة</div>
+                <div class="p-block">🥉</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- جدول كامل -->
+          <div class="card fi fi-2">
+            <div class="tbl-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>الطالب</th>
+                    <th>الالتزام</th>
+                    <th>الصفحات</th>
+                    <th>النقاط</th>
+                    <th>الشارة</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span style="font-size:1.1rem">🥇</span></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:.65rem">
+                        <div class="u-av" style="width:34px;height:34px;font-size:.8rem;background:var(--accent-light);color:var(--accent)">م</div>
+                        <div><div style="font-weight:600">محمد الزهراني</div><div style="font-size:.72rem;color:var(--text-muted)">٢١ يوم 🔥</div></div>
+                      </div>
+                    </td>
+                    <td><div style="display:flex;align-items:center;gap:.5rem"><div class="pbar" style="width:80px"><div class="pbar-fill" data-w="100%"></div></div><span style="font-size:.78rem;font-weight:600">١٠٠٪</span></div></td>
+                    <td><span style="font-weight:700">١٤ صفحة</span></td>
+                    <td><span style="font-weight:800;color:var(--accent)">٩٨٠</span></td>
+                    <td><span class="badge badge-a">نجم الأسبوع</span></td>
+                  </tr>
+                  <tr>
+                    <td><span style="font-size:1.1rem">🥈</span></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:.65rem">
+                        <div class="u-av" style="width:34px;height:34px;font-size:.8rem;background:#f3f4f6;color:#6b7280">س</div>
+                        <div><div style="font-weight:600">سارة القحطاني</div><div style="font-size:.72rem;color:var(--text-muted)">١٨ يوم 🔥</div></div>
+                      </div>
+                    </td>
+                    <td><div style="display:flex;align-items:center;gap:.5rem"><div class="pbar" style="width:80px"><div class="pbar-fill" data-w="86%"></div></div><span style="font-size:.78rem;font-weight:600">٨٦٪</span></div></td>
+                    <td><span style="font-weight:700">١٢ صفحة</span></td>
+                    <td><span style="font-weight:800;color:#6b7280">٨٤٠</span></td>
+                    <td><span class="badge badge-b">مثابرة</span></td>
+                  </tr>
+                  <tr style="background:var(--primary-xlight)">
+                    <td><span style="font-size:1.1rem">🥉</span></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:.65rem">
+                        <div class="u-av" style="width:34px;height:34px;font-size:.8rem">ي</div>
+                        <div><div style="font-weight:600">يوسف العمري <span style="font-size:.7rem;color:var(--primary)">(أنت)</span></div><div style="font-size:.72rem;color:var(--text-muted)">١٤ يوم 🔥</div></div>
+                      </div>
+                    </td>
+                    <td><div style="display:flex;align-items:center;gap:.5rem"><div class="pbar" style="width:80px"><div class="pbar-fill" data-w="71%"></div></div><span style="font-size:.78rem;font-weight:600">٧١٪</span></div></td>
+                    <td><span style="font-weight:700">١٠ صفحات</span></td>
+                    <td><span style="font-weight:800;color:var(--primary)">٧٦٠</span></td>
+                    <td><span class="badge badge-g">صاعد</span></td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-muted)">٤</td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:.65rem">
+                        <div class="u-av" style="width:34px;height:34px;font-size:.8rem;background:#f3f4f6;color:#6b7280">ع</div>
+                        <div><div style="font-weight:600">عبدالله الدوسري</div><div style="font-size:.72rem;color:var(--text-muted)">١١ يوم</div></div>
+                      </div>
+                    </td>
+                    <td><div style="display:flex;align-items:center;gap:.5rem"><div class="pbar" style="width:80px"><div class="pbar-fill" data-w="57%"></div></div><span style="font-size:.78rem;font-weight:600">٥٧٪</span></div></td>
+                    <td><span style="font-weight:700">٨ صفحات</span></td>
+                    <td><span style="font-weight:700;color:var(--text-muted)">٦٢٠</span></td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-muted)">٥</td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:.65rem">
+                        <div class="u-av" style="width:34px;height:34px;font-size:.8rem;background:#fce7f3;color:#be185d">ن</div>
+                        <div><div style="font-weight:600">نورة السالم</div><div style="font-size:.72rem;color:var(--text-muted)">٧ أيام</div></div>
+                      </div>
+                    </td>
+                    <td><div style="display:flex;align-items:center;gap:.5rem"><div class="pbar" style="width:80px"><div class="pbar-fill b" data-w="50%"></div></div><span style="font-size:.78rem;font-weight:600">٥٠٪</span></div></td>
+                    <td><span style="font-weight:700">٦ صفحات</span></td>
+                    <td><span style="font-weight:700;color:var(--text-muted)">٤٨٠</span></td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--text-muted)">٦</td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:.65rem">
+                        <div class="u-av" style="width:34px;height:34px;font-size:.8rem;background:#ede9fe;color:#6d28d9">ف</div>
+                        <div><div style="font-weight:600">فيصل الحربي</div><div style="font-size:.72rem;color:var(--text-muted)">٥ أيام</div></div>
+                      </div>
+                    </td>
+                    <td><div style="display:flex;align-items:center;gap:.5rem"><div class="pbar" style="width:80px"><div class="pbar-fill p" data-w="43%"></div></div><span style="font-size:.78rem;font-weight:600">٤٣٪</span></div></td>
+                    <td><span style="font-weight:700">٥ صفحات</span></td>
+                    <td><span style="font-weight:700;color:var(--text-muted)">٣٩٠</span></td>
+                    <td>—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div><!-- /tab-week -->
+
+        <!-- شهر -->
+        <div id="tab-month" class="tab-panel">
+          <div class="card" style="text-align:center;padding:3rem">
+            <div style="font-size:3rem;margin-bottom:1rem">📊</div>
+            <h3 style="margin-bottom:.5rem">إحصاءات الشهر</h3>
+            <p style="color:var(--text-muted);font-size:.875rem">سيتم تحديث الإحصاءات الشهرية في نهاية الشهر</p>
+          </div>
+        </div>
+
+        <!-- الكل -->
+        <div id="tab-all" class="tab-panel">
+          <div class="card" style="text-align:center;padding:3rem">
+            <div style="font-size:3rem;margin-bottom:1rem">🏆</div>
+            <h3 style="margin-bottom:.5rem">الإحصاءات الكاملة</h3>
+            <p style="color:var(--text-muted);font-size:.875rem">إحصاءات منذ بداية الحلقة — قريباً</p>
+          </div>
+        </div>
+
+      </div><!-- /tabs-leaderboard -->
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الجدول الأسبوعي — منصة تحفيظ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-wrap">
+
+  <!-- شريط جانبي -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo-ico"><i class="fa-solid fa-mosque"></i></div>
+      <div>
+        <div class="sb-title">منصة تحفيظ</div>
+        <div class="sb-sub">حلقة الشيخ أحمد</div>
+      </div>
+    </div>
+    <div class="sb-user">
+      <div class="u-av">ي</div>
+      <div>
+        <div class="u-name">يوسف العمري</div>
+        <div class="u-role">طالب · المستوى الثالث</div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-grp-lbl">القائمة الرئيسية</div>
+      <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> لوحة التحكم</a>
+      <a href="schedule.html" class="nav-link active"><i class="fa-solid fa-calendar-week"></i> الجدول الأسبوعي</a>
+      <a href="leaderboard.html" class="nav-link"><i class="fa-solid fa-trophy"></i> المتصدرون</a>
+      <a href="challenges.html" class="nav-link"><i class="fa-solid fa-bolt"></i> التحديات <span class="nav-pill a">٢</span></a>
+      <div class="nav-grp-lbl">الأدوات</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-message"></i> الرسائل <span class="nav-pill">٣</span></a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-chart-bar"></i> تقدمي</a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-medal"></i> إنجازاتي</a>
+      <div class="nav-grp-lbl">المعلم</div>
+      <a href="teacher.html" class="nav-link"><i class="fa-solid fa-chalkboard-user"></i> لوحة المعلم</a>
+      <div class="nav-grp-lbl">الحساب</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i> الإعدادات</a>
+    </nav>
+    <div class="sb-footer">
+      <a href="index.html" class="nav-link" style="border-radius:var(--radius-sm)"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</a>
+    </div>
+  </aside>
+
+  <!-- منطقة رئيسية -->
+  <div class="main-area">
+    <div class="topbar">
+      <div class="topbar-info">
+        <h2>الجدول الأسبوعي</h2>
+        <p>الأسبوع الحالي — ٥ مايو إلى ١١ مايو ٢٠٢٥</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="ico-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></div>
+        <div class="u-av" style="cursor:pointer">ي</div>
+      </div>
+    </div>
+
+    <div class="page-body">
+
+      <!-- ملخص الأسبوع -->
+      <div class="stats-row fi" style="grid-template-columns:repeat(4,1fr);margin-bottom:1.5rem">
+        <div class="stat-card">
+          <div class="stat-ico g"><i class="fa-solid fa-check-double"></i></div>
+          <div>
+            <div class="stat-num">٦</div>
+            <div class="stat-lbl">أيام مكتملة</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-ico a"><i class="fa-solid fa-book-open"></i></div>
+          <div>
+            <div class="stat-num">١١</div>
+            <div class="stat-lbl">صفحات هذا الأسبوع</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-ico b"><i class="fa-solid fa-rotate-right"></i></div>
+          <div>
+            <div class="stat-num">٩</div>
+            <div class="stat-lbl">مراجعات مكتملة</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-ico p"><i class="fa-solid fa-bullseye"></i></div>
+          <div>
+            <div class="stat-num">٨٥٪</div>
+            <div class="stat-lbl">نسبة الإنجاز</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ملاحظة المعلم -->
+      <div class="teacher-msg fi fi-1" style="margin-bottom:1.5rem">
+        <div class="t-msg-av">أ</div>
+        <div class="t-msg-body">
+          <strong style="font-size:.82rem;color:var(--primary)">ملاحظة الشيخ أحمد للأسبوع</strong>
+          <p>ركّز هذا الأسبوع على تثبيت حفظ سورة البقرة من آية ٢٨٠ حتى النهاية. يوم الجمعة للراحة والمراجعة الكاملة فقط.</p>
+          <div class="t-msg-meta">آخر تحديث: الأحد ٥ مايو ٢٠٢٥</div>
+        </div>
+      </div>
+
+      <!-- الجدول -->
+      <div class="card fi fi-2">
+        <div class="card-hd" style="margin-bottom:1.5rem">
+          <h3><i class="fa-solid fa-calendar-week" style="color:var(--primary)"></i> جدول الأسبوع</h3>
+          <div style="display:flex;gap:.5rem">
+            <span class="badge badge-g"><i class="fa-solid fa-square"></i> حفظ جديد</span>
+            <span class="badge badge-a"><i class="fa-solid fa-square"></i> مراجعة</span>
+          </div>
+        </div>
+
+        <div class="week-grid">
+
+          <!-- الأحد -->
+          <div class="week-row">
+            <div class="day-lbl done-day">
+              <div class="day-name-txt">الأحد</div>
+              <div class="day-date-num">٥</div>
+              <div style="font-size:.6rem;margin-top:.2rem;color:var(--primary)">✓ مكتمل</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task new-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype new">حفظ</div>
+                <div><div class="task-surah">البقرة ٢٨٠–٢٨١</div><div class="task-verses">آيتان جديدتان</div></div>
+                <span class="badge badge-a" style="margin-right:auto">+٢٠ نقطة</span>
+              </div>
+              <div class="day-task rev-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">البقرة ٢٧٠–٢٧٩</div><div class="task-verses">١٠ آيات</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- الاثنين -->
+          <div class="week-row">
+            <div class="day-lbl done-day">
+              <div class="day-name-txt">الاثنين</div>
+              <div class="day-date-num">٦</div>
+              <div style="font-size:.6rem;margin-top:.2rem;color:var(--primary)">✓ مكتمل</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task new-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype new">حفظ</div>
+                <div><div class="task-surah">البقرة ٢٨٢</div><div class="task-verses">آية الدَّين — مطوّلة</div></div>
+                <span class="badge badge-a" style="margin-right:auto">+٣٠ نقطة</span>
+              </div>
+              <div class="day-task rev-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">البقرة ٢٨٠–٢٨١</div><div class="task-verses">تثبيت أمس</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- الثلاثاء -->
+          <div class="week-row">
+            <div class="day-lbl done-day">
+              <div class="day-name-txt">الثلاثاء</div>
+              <div class="day-date-num">٧</div>
+              <div style="font-size:.6rem;margin-top:.2rem;color:var(--primary)">✓ مكتمل</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task new-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype new">حفظ</div>
+                <div><div class="task-surah">البقرة ٢٨٣</div><div class="task-verses">آية كاملة</div></div>
+                <span class="badge badge-a" style="margin-right:auto">+٢٠ نقطة</span>
+              </div>
+              <div class="day-task rev-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">البقرة ٢٧٠–٢٨٢</div><div class="task-verses">١٣ آية</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- الأربعاء -->
+          <div class="week-row">
+            <div class="day-lbl done-day">
+              <div class="day-name-txt">الأربعاء</div>
+              <div class="day-date-num">٨</div>
+              <div style="font-size:.6rem;margin-top:.2rem;color:var(--primary)">✓ مكتمل</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task new-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype new">حفظ</div>
+                <div><div class="task-surah">البقرة ٢٨٤</div><div class="task-verses">آية كاملة</div></div>
+                <span class="badge badge-a" style="margin-right:auto">+٢٠ نقطة</span>
+              </div>
+              <div class="day-task rev-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">الفاتحة كاملة</div><div class="task-verses">٧ آيات</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- الخميس -->
+          <div class="week-row">
+            <div class="day-lbl done-day">
+              <div class="day-name-txt">الخميس</div>
+              <div class="day-date-num">٩</div>
+              <div style="font-size:.6rem;margin-top:.2rem;color:var(--primary)">✓ مكتمل</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task new-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype new">حفظ</div>
+                <div><div class="task-surah">البقرة ٢٨٥</div><div class="task-verses">آية كاملة</div></div>
+                <span class="badge badge-a" style="margin-right:auto">+٢٠ نقطة</span>
+              </div>
+              <div class="day-task rev-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">البقرة ٢٨٠–٢٨٤</div><div class="task-verses">٥ آيات</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- الجمعة -->
+          <div class="week-row">
+            <div class="day-lbl" style="background:#f0fdf4;border-color:#a7f3d0">
+              <div class="day-name-txt">الجمعة</div>
+              <div class="day-date-num">١٠</div>
+              <div style="font-size:.6rem;margin-top:.2rem;color:#059669">راحة</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task rev-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">مراجعة حرة</div><div class="task-verses">يوم الراحة والمراجعة</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- السبت — اليوم -->
+          <div class="week-row">
+            <div class="day-lbl today">
+              <div class="day-name-txt">السبت</div>
+              <div class="day-date-num">١١</div>
+              <div style="font-size:.6rem;margin-top:.2rem;opacity:.8">اليوم</div>
+            </div>
+            <div class="day-tasks">
+              <div class="day-task new-t done-t">
+                <div class="task-chk">✓</div>
+                <div class="ttype new">حفظ</div>
+                <div><div class="task-surah">البقرة ٢٨٥</div><div class="task-verses">تثبيت</div></div>
+                <span class="badge badge-g" style="margin-right:auto">مكتمل</span>
+              </div>
+              <div class="day-task rev-t">
+                <div class="task-chk"></div>
+                <div class="ttype rev">مراجعة</div>
+                <div><div class="task-surah">البقرة ٢٨٦</div><div class="task-verses">الآية الأخيرة</div></div>
+                <span class="badge badge-gray" style="margin-right:auto">قيد التنفيذ</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /week-grid -->
+
+        <!-- ملخص أسفل -->
+        <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+          <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+            <div style="text-align:center">
+              <div style="font-size:1.4rem;font-weight:800;color:var(--primary)">١١</div>
+              <div style="font-size:.75rem;color:var(--text-muted)">صفحة محفوظة</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:1.4rem;font-weight:800;color:var(--accent)">١٤٠</div>
+              <div style="font-size:.75rem;color:var(--text-muted)">نقطة مكتسبة</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:1.4rem;font-weight:800;color:#3b82f6">٦/٧</div>
+              <div style="font-size:.75rem;color:var(--text-muted)">أيام مكتملة</div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-muted);margin-bottom:.4rem">
+              <span>نسبة إنجاز الأسبوع</span><span style="font-weight:700;color:var(--primary)">٨٥٪</span>
+            </div>
+            <div class="pbar" style="width:200px"><div class="pbar-fill" data-w="85%"></div></div>
+          </div>
+        </div>
+
+      </div><!-- /card -->
+
+    </div><!-- /page-body -->
+  </div><!-- /main-area -->
+</div><!-- /app-wrap -->
+
+<script src="js/main.js"></script>
+</body>
+</html>

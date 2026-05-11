@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم — منصة تحفيظ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-wrap">
+
+  <!-- ===== شريط جانبي ===== -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo-ico"><i class="fa-solid fa-mosque"></i></div>
+      <div>
+        <div class="sb-title">منصة تحفيظ</div>
+        <div class="sb-sub">حلقة الشيخ أحمد</div>
+      </div>
+    </div>
+    <div class="sb-user">
+      <div class="u-av">ي</div>
+      <div>
+        <div class="u-name">يوسف العمري</div>
+        <div class="u-role">طالب · المستوى الثالث</div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-grp-lbl">القائمة الرئيسية</div>
+      <a href="dashboard.html" class="nav-link active"><i class="fa-solid fa-house"></i> لوحة التحكم</a>
+      <a href="schedule.html" class="nav-link"><i class="fa-solid fa-calendar-week"></i> الجدول الأسبوعي</a>
+      <a href="leaderboard.html" class="nav-link"><i class="fa-solid fa-trophy"></i> المتصدرون</a>
+      <a href="challenges.html" class="nav-link"><i class="fa-solid fa-bolt"></i> التحديات <span class="nav-pill a">٢</span></a>
+      <div class="nav-grp-lbl">الأدوات</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-message"></i> الرسائل <span class="nav-pill">٣</span></a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-chart-bar"></i> تقدمي</a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-medal"></i> إنجازاتي</a>
+      <div class="nav-grp-lbl">المعلم</div>
+      <a href="teacher.html" class="nav-link"><i class="fa-solid fa-chalkboard-user"></i> لوحة المعلم</a>
+      <div class="nav-grp-lbl">الحساب</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i> الإعدادات</a>
+    </nav>
+    <div class="sb-footer">
+      <a href="index.html" class="nav-link" style="border-radius:var(--radius-sm)"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</a>
+    </div>
+  </aside>
+
+  <!-- ===== المنطقة الرئيسية ===== -->
+  <div class="main-area">
+    <div class="topbar">
+      <div class="topbar-info">
+        <h2>لوحة التحكم</h2>
+        <p>الأحد، ١١ مايو ٢٠٢٥</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="ico-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></div>
+        <div class="ico-btn"><i class="fa-regular fa-circle-question"></i></div>
+        <div class="u-av" style="cursor:pointer">ي</div>
+      </div>
+    </div>
+
+    <div class="page-body">
+
+      <!-- تحية -->
+      <div class="fi" style="margin-bottom:1.25rem">
+        <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:.2rem">السلام عليكم • حلقة الشيخ أحمد</p>
+        <h2 style="font-size:1.75rem;font-weight:800;line-height:1.1">يوسف العمري 👋</h2>
+      </div>
+
+      <!-- ══════ بطاقة الالتزام البطلة ══════ -->
+      <div class="streak-hero fi fi-1" style="margin-bottom:1rem">
+        <div class="sh-top">
+          <span class="sh-lbl">🔥 سلسلة الالتزام</span>
+          <button class="sh-reset" title="تحديث"><i class="fa-solid fa-rotate"></i></button>
+        </div>
+        <div class="sh-main">
+          <span class="sh-num">١٤</span>
+          <span class="sh-unit">يوم</span>
+        </div>
+        <p class="sh-msg" id="sh-msg">ما شاء الله — التزامك يبني شيئاً لا يُرى إلا يوم القيامة.</p>
+        <div class="week-circles" id="week-circles"></div>
+      </div>
+
+      <!-- ══════ تقدم السورة الحالية ══════ -->
+      <div class="card fi fi-2" style="margin-bottom:1rem">
+        <div class="surah-card-top">
+          <div>
+            <div class="surah-lbl">تقدم السورة الحالية 📖</div>
+            <div class="surah-name">سورة البقرة</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <div class="surah-pct">٥٠٪</div>
+            <div class="surah-ico"><i class="fa-solid fa-book-open"></i></div>
+          </div>
+        </div>
+        <div class="surah-row">
+          <span>الهدف التالي: <b>الآية ١٤٣</b></span>
+          <span><b>١٤٢</b> من <b>٢٨٦</b> آية</span>
+        </div>
+        <div class="pbar" style="height:10px;border-radius:6px;margin-bottom:1rem">
+          <div class="pbar-fill" data-w="50%" style="border-radius:6px"></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;border-radius:var(--radius-lg);padding:.75rem;font-size:.9rem">
+          <i class="fa-solid fa-plus"></i> سجّل آيات جديدة
+        </button>
+      </div>
+
+      <!-- ══════ رحلتك في القرآن + الحلقة ══════ -->
+      <div class="grid2 fi fi-3" style="margin-bottom:1rem">
+
+        <!-- رحلتك في القرآن -->
+        <div class="card" id="juzz-grid-section"></div>
+
+        <!-- أعلى الحلقة -->
+        <div class="card">
+          <div class="card-hd">
+            <h3><i class="fa-solid fa-trophy" style="color:var(--accent)"></i> أعلى الحلقة</h3>
+            <a href="leaderboard.html" style="font-size:.78rem;color:var(--primary)">الكل ←</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.6rem .5rem;border-radius:var(--radius-sm);background:#fef3c7">
+              <span style="font-size:1.2rem">🥇</span>
+              <div class="u-av" style="width:32px;height:32px;font-size:.75rem;background:var(--accent-light);color:var(--accent)">م</div>
+              <div style="flex:1">
+                <div style="font-size:.85rem;font-weight:700">محمد الزهراني</div>
+                <div style="font-size:.72rem;color:var(--text-muted)">٢١ يوم متواصل</div>
+              </div>
+              <span style="font-weight:700;color:var(--accent);font-size:.9rem">٩٨٠</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.6rem .5rem;border-radius:var(--radius-sm);background:#f3f4f6">
+              <span style="font-size:1.2rem">🥈</span>
+              <div class="u-av" style="width:32px;height:32px;font-size:.75rem;background:#f3f4f6;color:#6b7280">س</div>
+              <div style="flex:1">
+                <div style="font-size:.85rem;font-weight:700">سارة القحطاني</div>
+                <div style="font-size:.72rem;color:var(--text-muted)">١٨ يوم متواصل</div>
+              </div>
+              <span style="font-weight:700;color:#6b7280;font-size:.9rem">٨٤٠</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.6rem .5rem;border-radius:var(--radius-sm);background:var(--primary-xlight);border:1px solid var(--primary-light)">
+              <span style="font-size:1.2rem">🥉</span>
+              <div class="u-av" style="width:32px;height:32px;font-size:.75rem">ي</div>
+              <div style="flex:1">
+                <div style="font-size:.85rem;font-weight:700">أنت — يوسف</div>
+                <div style="font-size:.72rem;color:var(--text-muted)">١٤ يوم متواصل</div>
+              </div>
+              <span style="font-weight:700;color:var(--primary);font-size:.9rem">٧٦٠</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;padding:.6rem .5rem;border-radius:var(--radius-sm)">
+              <span style="font-size:1.2rem;opacity:.4">٤</span>
+              <div class="u-av" style="width:32px;height:32px;font-size:.75rem;background:#f3f4f6;color:#6b7280">ع</div>
+              <div style="flex:1">
+                <div style="font-size:.85rem;font-weight:700">عبدالله الدوسري</div>
+                <div style="font-size:.72rem;color:var(--text-muted)">١١ يوم متواصل</div>
+              </div>
+              <span style="font-weight:700;color:var(--text-muted);font-size:.9rem">٦٢٠</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══════ رسالة المعلم ══════ -->
+      <div class="teacher-msg fi fi-4">
+        <div class="t-msg-av">أ</div>
+        <div class="t-msg-body">
+          <strong style="font-size:.82rem;color:var(--primary)">الشيخ أحمد</strong>
+          <p>أحسنت يا يوسف! الأسبوع الماضي كان ممتازاً. استمر في مراجعة البقرة يومياً، وحاول تحسين مخارج الحروف في سورة الفاتحة.</p>
+          <div class="t-msg-meta">منذ ساعتين</div>
+        </div>
+      </div>
+
+    </div><!-- /page-body -->
+  </div><!-- /main-area -->
+</div><!-- /app-wrap -->
+
+<div id="juzz-tooltip" class="juzz-tip"></div>
+<script src="js/main.js"></script>
+</body>
+</html>

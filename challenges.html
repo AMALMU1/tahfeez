@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التحديات — منصة تحفيظ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ---- عروض متعددة ---- */
+    .qv { display: none; }
+    .qv.on { display: block; animation: fadeInUp .25s ease; }
+
+    /* ---- إعداد التحدي ---- */
+    .setup-body { padding: 1.5rem; max-width: 680px; }
+    .setup-section { margin-bottom: 1.5rem; }
+    .setup-section-title { font-size: .8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .75rem; }
+
+    .game-type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+    .gt-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--tr);
+      position: relative;
+    }
+    .gt-card:hover { border-color: var(--primary-light); }
+    .gt-card.sel { border-color: var(--primary); background: var(--primary-xlight); }
+    .gt-card .sel-check { position: absolute; top: .6rem; left: .6rem; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; display: none; align-items: center; justify-content: center; color: #fff; font-size: .55rem; }
+    .gt-card.sel .sel-check { display: flex; }
+    .gt-icon { font-size: 1.5rem; margin-bottom: .5rem; }
+    .gt-name { font-size: .9rem; font-weight: 700; margin-bottom: .25rem; }
+    .gt-desc { font-size: .72rem; color: var(--text-muted); line-height: 1.5; }
+
+    .diff-row { display: flex; gap: .5rem; }
+    .diff-btn { flex: 1; padding: .6rem; border: 2px solid var(--border); border-radius: var(--radius); background: #fff; cursor: pointer; font-family: inherit; font-size: .82rem; font-weight: 600; color: var(--text-muted); transition: var(--tr); }
+    .diff-btn:hover { border-color: var(--primary-light); }
+    .diff-btn.sel { border-color: var(--primary); background: var(--primary-xlight); color: var(--primary); }
+
+    .session-box {
+      background: var(--primary-xlight);
+      border: 1px solid var(--primary-light);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.25rem;
+    }
+    .session-box .s-label { font-size: .72rem; color: var(--primary); font-weight: 700; margin-bottom: .3rem; text-transform: uppercase; letter-spacing: .05em; }
+    .session-box .s-line { font-size: 1rem; font-weight: 700; margin-bottom: .2rem; }
+    .session-box .s-sub { font-size: .78rem; color: var(--text-muted); }
+
+    /* ---- شاشة التحدي ---- */
+    .quiz-screen { background: #f3faf4; min-height: calc(100vh - 60px); }
+    .quiz-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .875rem 1.5rem;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .quiz-top h3 { font-size: 1rem; font-weight: 700; }
+    .quiz-meta { display: flex; align-items: center; gap: 1rem; font-size: .82rem; color: var(--text-muted); font-weight: 600; }
+    .q-pts { color: var(--accent); }
+
+    .quiz-pbar-wrap { height: 5px; background: var(--border); }
+    .quiz-pbar-fill { height: 100%; background: var(--primary); transition: width .4s ease; }
+
+    .question-card {
+      background: linear-gradient(150deg, #a8d5a2 0%, #7ab87a 100%);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      margin: 1.25rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(106,168,106,.25);
+    }
+    .q-type-lbl {
+      font-size: .78rem;
+      color: rgba(255,255,255,.8);
+      margin-bottom: .875rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+    .ayah-txt {
+      font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+      font-size: 1.5rem;
+      line-height: 2.2;
+      color: #1b3d1a;
+      direction: rtl;
+    }
+    .ayah-blank {
+      display: inline-block;
+      border-bottom: 2.5px solid rgba(255,255,255,.7);
+      min-width: 55px;
+      margin: 0 3px;
+      vertical-align: bottom;
+    }
+
+    .opts-list { display: flex; flex-direction: column; gap: .65rem; padding: 0 1.25rem 1.5rem; }
+    .opts-2x2  { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; padding: 0 1.25rem 1.5rem; }
+
+    .opt {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: .875rem 1.25rem;
+      font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+      font-size: 1.2rem;
+      line-height: 1.9;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      color: var(--text);
+    }
+    .opt:hover:not(.locked) { border-color: var(--primary-light); background: var(--primary-xlight); }
+    .opt.correct { background: linear-gradient(135deg, #a8d5a2, #7ab87a); border-color: #7ab87a; color: #fff; }
+    .opt.wrong   { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+    .opt.locked  { cursor: default; }
+
+    /* ---- نتائج ---- */
+    .results-wrap { padding: 2rem 1.5rem; max-width: 500px; margin: 0 auto; text-align: center; }
+    .score-circle {
+      width: 150px; height: 150px; border-radius: 50%;
+      border: 8px solid var(--primary-light);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    }
+    .score-circle.exc { border-color: #7ab87a; }
+    .score-circle.good { border-color: var(--accent); }
+    .score-circle.poor { border-color: #ef4444; }
+    .score-num { font-size: 2.5rem; font-weight: 800; line-height: 1; }
+    .score-denom { font-size: .9rem; color: var(--text-muted); margin-top: .2rem; }
+    .result-stars { font-size: 2rem; margin-bottom: .75rem; letter-spacing: .2rem; }
+    .result-msg { font-size: 1.1rem; font-weight: 700; margin-bottom: .35rem; }
+    .result-sub { font-size: .85rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .result-stats { display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; }
+    .rs-item { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1.25rem; }
+    .rs-num { font-size: 1.4rem; font-weight: 800; }
+    .rs-lbl { font-size: .72rem; color: var(--text-muted); margin-top: .1rem; }
+
+    /* ---- بطاقة تحدي المعلم ---- */
+    .teacher-ch-card {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 1.5px solid #a7f3d0;
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: var(--tr);
+      position: relative;
+      overflow: hidden;
+    }
+    .teacher-ch-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), #7ab87a);
+    }
+    .teacher-ch-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+    .ch-from-teacher {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--primary); color: #fff;
+      border-radius: var(--radius-full);
+      padding: .2rem .75rem; font-size: .68rem; font-weight: 700;
+      margin-bottom: .875rem;
+    }
+    .ayah-preview {
+      font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+      font-size: 1.15rem;
+      line-height: 2;
+      color: #1b3d1a;
+      background: rgba(255,255,255,.6);
+      border-radius: var(--radius);
+      padding: .65rem 1rem;
+      margin: .75rem 0;
+      direction: rtl;
+      text-align: center;
+    }
+    .ch-stats-row { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: .875rem; }
+  </style>
+</head>
+<body>
+<div class="app-wrap">
+
+  <!-- شريط جانبي -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo-ico"><i class="fa-solid fa-mosque"></i></div>
+      <div><div class="sb-title">منصة تحفيظ</div><div class="sb-sub">حلقة الشيخ أحمد</div></div>
+    </div>
+    <div class="sb-user">
+      <div class="u-av">ي</div>
+      <div><div class="u-name">يوسف العمري</div><div class="u-role">طالب · المستوى الثالث</div></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-grp-lbl">القائمة الرئيسية</div>
+      <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> لوحة التحكم</a>
+      <a href="schedule.html" class="nav-link"><i class="fa-solid fa-calendar-week"></i> الجدول الأسبوعي</a>
+      <a href="leaderboard.html" class="nav-link"><i class="fa-solid fa-trophy"></i> المتصدرون</a>
+      <a href="challenges.html" class="nav-link active"><i class="fa-solid fa-bolt"></i> التحديات <span class="nav-pill a">١</span></a>
+      <div class="nav-grp-lbl">الأدوات</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-message"></i> الرسائل <span class="nav-pill">٣</span></a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-chart-bar"></i> تقدمي</a>
+      <a href="#" class="nav-link"><i class="fa-solid fa-medal"></i> إنجازاتي</a>
+      <div class="nav-grp-lbl">المعلم</div>
+      <a href="teacher.html" class="nav-link"><i class="fa-solid fa-chalkboard-user"></i> لوحة المعلم</a>
+      <div class="nav-grp-lbl">الحساب</div>
+      <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i> الإعدادات</a>
+    </nav>
+    <div class="sb-footer">
+      <a href="index.html" class="nav-link" style="border-radius:var(--radius-sm)"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</a>
+    </div>
+  </aside>
+
+  <!-- ===== المنطقة الرئيسية ===== -->
+  <div class="main-area">
+
+    <!-- ======================================================
+         عرض ١ — قائمة التحديات
+         ====================================================== -->
+    <div id="v-list" class="qv on">
+      <div class="topbar">
+        <div class="topbar-info">
+          <h2><i class="fa-solid fa-bolt" style="color:var(--accent)"></i> التحديات</h2>
+          <p>تحديات مبنية على ملاحظات الشيخ أحمد</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="ico-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></div>
+          <div class="u-av" style="cursor:pointer">ي</div>
+        </div>
+      </div>
+
+      <div class="page-body">
+
+        <!-- ملاحظة المعلم -->
+        <div style="background:linear-gradient(135deg,#064e3b,#065f46);border-radius:var(--radius-xl);padding:1.25rem 1.5rem;margin-bottom:1.5rem;color:#fff;display:flex;align-items:center;gap:1rem" class="fi">
+          <div style="width:44px;height:44px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">أ</div>
+          <div style="flex:1">
+            <div style="font-size:.7rem;opacity:.7;margin-bottom:.2rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em">ملاحظة الشيخ أحمد</div>
+            <div style="font-size:.95rem;font-weight:600">"يوسف، ركّز هذا الأسبوع على أواخر البقرة (٢٨٤–٢٨٦)، تحدَّ نفسك يومياً وأثبت أنك الأقوى! 💪"</div>
+          </div>
+          <span style="background:rgba(255,255,255,.15);border-radius:var(--radius-full);padding:.25rem .75rem;font-size:.72rem;font-weight:700;white-space:nowrap">منذ يوم</span>
+        </div>
+
+        <!-- التحدي الرئيسي من المعلم -->
+        <div class="teacher-ch-card fi fi-1" onclick="showSetup()">
+          <div class="ch-from-teacher"><i class="fa-solid fa-chalkboard-user"></i> تحدٍّ من المعلم</div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem">
+            <div style="flex:1">
+              <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:.35rem">تحدَّ أواخر البقرة — هل أنت جاهز؟ 🏆</h3>
+              <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6">أثبت أن الآيات ٢٨٤–٢٨٦ راسخة في ذهنك — أكمل الكلمات الناقصة وحدّد الآيات المتسلسلة</p>
+            </div>
+            <div style="width:52px;height:52px;background:var(--primary);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;flex-shrink:0">
+              <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+          </div>
+          <div class="ayah-preview">لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ</div>
+          <div class="ch-stats-row">
+            <span class="badge badge-g"><i class="fa-solid fa-bolt"></i> ٥ تحديات</span>
+            <span class="badge badge-a"><i class="fa-solid fa-star"></i> ٢٠٠ نقطة</span>
+            <span class="badge badge-b"><i class="fa-solid fa-layer-group"></i> آيات ٢٨٤–٢٨٦</span>
+            <span class="badge badge-gray"><i class="fa-regular fa-clock"></i> ~٣ دقائق</span>
+          </div>
+          <div style="margin-top:1.1rem">
+            <button class="btn btn-primary" style="width:100%;border-radius:var(--radius-lg);padding:.75rem" onclick="showSetup();event.stopPropagation()">
+              <i class="fa-solid fa-bolt"></i> ابدأ التحدي الآن!
+            </button>
+          </div>
+        </div>
+
+        <!-- تحديات أخرى -->
+        <div style="margin-top:1.5rem;margin-bottom:.75rem;font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em" class="fi fi-2">تحديات أخرى متاحة</div>
+        <div class="challenges-grid fi fi-3">
+
+          <div class="ch-card" style="opacity:.7">
+            <div class="ch-stripe b"></div>
+            <div class="ch-hd" style="margin-top:.4rem">
+              <div class="ch-ico" style="background:#dbeafe;color:#2563eb;width:44px;height:44px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.2rem"><i class="fa-solid fa-book-open-reader"></i></div>
+              <span class="badge badge-gray">قريباً</span>
+            </div>
+            <div class="ch-title">تحدي سورة الفاتحة</div>
+            <div class="ch-desc">تحدَّ نفسك في حفظ الفاتحة — يفتح بعد إتمام التحدي الحالي</div>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem">
+              <span class="badge badge-gray">٧ أسئلة</span>
+              <span class="badge badge-gray">١٥٠ نقطة</span>
+            </div>
+          </div>
+
+          <div class="ch-card" style="opacity:.7">
+            <div class="ch-stripe p"></div>
+            <div class="ch-hd" style="margin-top:.4rem">
+              <div class="ch-ico" style="background:#ede9fe;color:#7c3aed;width:44px;height:44px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.2rem"><i class="fa-solid fa-bolt"></i></div>
+              <span class="badge badge-gray">قريباً</span>
+            </div>
+            <div class="ch-title">تحدي الوقت — جزء عم</div>
+            <div class="ch-desc">٢٠ سؤالاً من جزء عم في ٥ دقائق — للمتقدمين</div>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem">
+              <span class="badge badge-gray">٢٠ سؤال</span>
+              <span class="badge badge-gray">٥٠٠ نقطة</span>
+            </div>
+          </div>
+
+          <div class="ch-card" style="opacity:.7">
+            <div class="ch-stripe a"></div>
+            <div class="ch-hd" style="margin-top:.4rem">
+              <div class="ch-ico" style="background:var(--accent-light);color:var(--accent);width:44px;height:44px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.2rem"><i class="fa-solid fa-users"></i></div>
+              <span class="badge badge-gray">قريباً</span>
+            </div>
+            <div class="ch-title">تحدي الحلقة الجماعي</div>
+            <div class="ch-desc">تنافس مع أفراد حلقتك في تحدٍّ موحّد يضعه الشيخ أحمد — من سيكون الأقوى؟</div>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem">
+              <span class="badge badge-gray">١٢ مشارك</span>
+              <span class="badge badge-gray">١٠٠٠ نقطة</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /v-list -->
+
+
+    <!-- ======================================================
+         عرض ٢ — إعداد التحدي
+         ====================================================== -->
+    <div id="v-setup" class="qv">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <button class="ico-btn" onclick="showView('v-list')"><i class="fa-solid fa-arrow-right"></i></button>
+          <div class="topbar-info"><h2>جهّز نفسك للتحدي</h2><p>البقرة ٢٨٤–٢٨٦ — أثبت قوتك! 💪</p></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="u-av" style="cursor:pointer">ي</div>
+        </div>
+      </div>
+
+      <div class="setup-body">
+
+        <!-- السورة المختارة -->
+        <div class="card fi" style="margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem">
+          <div style="width:48px;height:48px;background:var(--primary);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0">
+            <i class="fa-solid fa-book-open-reader"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:1rem;font-weight:700">تحدي الحفظ</div>
+            <div style="font-size:.8rem;color:var(--text-muted);margin-top:.15rem">ثبّت حفظك وخُض التحدي بثقة الأبطال</div>
+          </div>
+          <span class="badge badge-g" style="font-size:.8rem;padding:.3rem .875rem"><i class="fa-solid fa-book"></i> البقرة • ٢٨٤–٢٨٦</span>
+        </div>
+
+        <!-- نوع اللعبة -->
+        <div class="setup-section fi fi-1">
+          <div class="setup-section-title">نوع اللعبة</div>
+          <div class="game-type-grid">
+            <div class="gt-card" id="gt-normal" onclick="selectGameType('normal')">
+              <div class="sel-check"><i class="fa-solid fa-check"></i></div>
+              <div class="gt-icon"><i class="fa-solid fa-book-open" style="color:#2563eb"></i></div>
+              <div class="gt-name">تحدي الفارس</div>
+              <div class="gt-desc">ثقة وهدوء، ١٠ جولات بلا ضغط زمني</div>
+            </div>
+            <div class="gt-card" id="gt-time" onclick="selectGameType('time')">
+              <div class="sel-check"><i class="fa-solid fa-check"></i></div>
+              <div class="gt-icon"><i class="fa-solid fa-stopwatch" style="color:var(--accent)"></i></div>
+              <div class="gt-name">تحدي الوقت</div>
+              <div class="gt-desc">استدعاء سريع، ٢٠ سؤالاً، ١٥ ثانية لكل سؤال</div>
+            </div>
+            <div class="gt-card sel" id="gt-mixed" onclick="selectGameType('mixed')">
+              <div class="sel-check"><i class="fa-solid fa-check"></i></div>
+              <div class="gt-icon"><i class="fa-solid fa-shuffle" style="color:var(--primary)"></i></div>
+              <div class="gt-name">التحدي الشامل</div>
+              <div class="gt-desc">مزيج من كل التحديات — للأبطال فقط! 🔥</div>
+            </div>
+          </div>
+          <div style="margin-top:.75rem;font-size:.78rem;color:var(--text-muted);background:var(--bg);border-radius:var(--radius);padding:.6rem .875rem" id="gt-hint">
+            التحدي الشامل يجمع كل الأنواع — الأبطال الحقيقيون لا يتراجعون! 🔥
+          </div>
+        </div>
+
+        <!-- مستوى الصعوبة -->
+        <div class="setup-section fi fi-2">
+          <div class="setup-section-title">اختر مستوى الصعوبة</div>
+          <div class="diff-row">
+            <button class="diff-btn" id="diff-easy" onclick="selectDiff('easy')">سهل</button>
+            <button class="diff-btn sel" id="diff-mid" onclick="selectDiff('mid')">متوسط</button>
+            <button class="diff-btn" id="diff-hard" onclick="selectDiff('hard')">صعب</button>
+          </div>
+        </div>
+
+        <!-- معاينة الجلسة -->
+        <div class="setup-section fi fi-3">
+          <div class="session-box">
+            <div class="s-label">معاينة الجلسة</div>
+            <div class="s-line" id="session-line">٥ تحديات • متوسط • البقرة ٢٨٤–٢٨٦</div>
+            <div class="s-sub" id="session-sub">التحدي الشامل يجمع كل الأنواع — الأبطال الحقيقيون لا يتراجعون! 🔥</div>
+          </div>
+        </div>
+
+        <!-- زر البدء -->
+        <button class="btn btn-primary fi fi-4" onclick="startQuiz()"
+          style="width:100%;padding:1rem;border-radius:var(--radius-lg);font-size:1rem">
+          <i class="fa-solid fa-bolt"></i> ابدأ التحدي الشامل ←
+        </button>
+
+      </div>
+    </div><!-- /v-setup -->
+
+
+    <!-- ======================================================
+         عرض ٣ — جولات التحدي
+         ====================================================== -->
+    <div id="v-quiz" class="qv">
+      <div class="quiz-screen">
+        <div class="quiz-top">
+          <button class="ico-btn" onclick="showView('v-setup')"><i class="fa-solid fa-arrow-right"></i></button>
+          <h3 id="quiz-surah-title">البقرة</h3>
+          <div class="quiz-meta">
+            <span id="quiz-counter">سؤال ١/٥</span>
+            <span class="q-pts" id="quiz-pts"><i class="fa-solid fa-trophy"></i> ٠ نقطة</span>
+          </div>
+        </div>
+        <div class="quiz-pbar-wrap">
+          <div class="quiz-pbar-fill" id="quiz-pbar" style="width:20%"></div>
+        </div>
+
+        <div id="quiz-content"><!-- يُحقن عبر JS --></div>
+      </div>
+    </div><!-- /v-quiz -->
+
+
+    <!-- ======================================================
+         عرض ٤ — النتائج
+         ====================================================== -->
+    <div id="v-results" class="qv">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <button class="ico-btn" onclick="showView('v-list')"><i class="fa-solid fa-arrow-right"></i></button>
+          <div class="topbar-info"><h2>نتيجة تحديك 🏆</h2></div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="results-wrap fi">
+          <div id="res-stars" class="result-stars">⭐⭐⭐</div>
+          <div id="score-circle" class="score-circle exc">
+            <div id="res-num" class="score-num" style="color:var(--primary)">٤</div>
+            <div class="score-denom" id="res-denom">من ٥ صحيحة</div>
+          </div>
+          <div id="res-msg" class="result-msg">ممتاز! أداء رائع 🎉</div>
+          <div id="res-sub" class="result-sub">حفظك لأواخر البقرة قوي جداً، استمر!</div>
+          <div class="result-stats">
+            <div class="rs-item">
+              <div id="rs-correct" class="rs-num" style="color:var(--primary)">٤</div>
+              <div class="rs-lbl">إجابات صحيحة</div>
+            </div>
+            <div class="rs-item">
+              <div id="rs-pts" class="rs-num" style="color:var(--accent)">١٦٠</div>
+              <div class="rs-lbl">نقطة مكتسبة</div>
+            </div>
+            <div class="rs-item">
+              <div id="rs-time" class="rs-num" style="color:#3b82f6">٢:٣٠</div>
+              <div class="rs-lbl">الوقت المستغرق</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.75rem;width:100%">
+            <button class="btn btn-primary btn-lg" onclick="startQuiz()" style="width:100%;border-radius:var(--radius-lg)">
+              <i class="fa-solid fa-bolt"></i> تحدَّى مجدداً 🔥
+            </button>
+            <button class="btn btn-outline btn-lg" onclick="showView('v-list')" style="width:100%;border-radius:var(--radius-lg)">
+              <i class="fa-solid fa-list"></i> العودة للتحديات
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /v-results -->
+
+  </div><!-- /main-area -->
+</div><!-- /app-wrap -->
+
+<script src="js/main.js"></script>
+<script>
+/* ============================================
+   بيانات جولات التحدي — أواخر البقرة ٢٨٤–٢٨٦
+   ============================================ */
+const QUESTIONS = [
+  {
+    type: 'before',
+    label: 'ما الآية التي تسبق؟',
+    ayah: 'لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا',
+    opts: [
+      { text: 'آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ', correct: true },
+      { text: 'لِّلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ', correct: false },
+      { text: 'رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا', correct: false },
+      { text: 'وَإِن كُنتُمْ عَلَى سَفَرٍ وَلَمْ تَجِدُوا كَاتِبًا', correct: false },
+    ]
+  },
+  {
+    type: 'fill',
+    label: 'أكمل الكلمة الناقصة',
+    before: 'آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن',
+    blank: true,
+    after: 'وَالْمُؤْمِنُونَ',
+    opts: [
+      { text: 'رَّبِّهِ', correct: true },
+      { text: 'إِلَهِهِ', correct: false },
+      { text: 'اللَّهِ', correct: false },
+      { text: 'رَبِّكُمْ', correct: false },
+    ]
+  },
+  {
+    type: 'after',
+    label: 'ما الآية التالية؟',
+    ayah: 'لِّلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ',
+    opts: [
+      { text: 'آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ', correct: true },
+      { text: 'لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا', correct: false },
+      { text: 'رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا', correct: false },
+      { text: 'وَإِن تُبْدُوا مَا فِي أَنفُسِكُمْ أَوْ تُخْفُوهُ', correct: false },
+    ]
+  },
+  {
+    type: 'fill',
+    label: 'أكمل الكلمة الناقصة',
+    before: 'لِّلَّهِ مَا فِي',
+    blank: true,
+    after: 'وَمَا فِي الْأَرْضِ',
+    opts: [
+      { text: 'السَّمَاوَاتِ', correct: true },
+      { text: 'الجَنَّاتِ', correct: false },
+      { text: 'الدُّنْيَا', correct: false },
+      { text: 'الْمُلْكِ', correct: false },
+    ]
+  },
+  {
+    type: 'before',
+    label: 'ما الآية التي تسبق؟',
+    ayah: 'رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا',
+    opts: [
+      { text: 'لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا', correct: true },
+      { text: 'آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ', correct: false },
+      { text: 'لِّلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ', correct: false },
+      { text: 'وَاللَّهُ عَلَى كُلِّ شَيْءٍ قَدِيرٌ', correct: false },
+    ]
+  }
+];
+
+/* ============================================
+   حالة التحدي
+   ============================================ */
+let currentQ = 0;
+let score = 0;
+let startTime = 0;
+
+/* ---- الوصول للعروض ---- */
+function showView(id) {
+  document.querySelectorAll('.qv').forEach(v => v.classList.remove('on'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('on'); window.scrollTo(0, 0); }
+}
+function showSetup() { showView('v-setup'); }
+
+/* ---- اختيار نوع اللعبة ---- */
+const gtHints = {
+  normal: 'الفارس يُثبت نفسه بهدوء — ١٠ جولات بلا ضغط زمني. أنت قادر!',
+  time:   'كل ثانية تُحتسب — ٢٠ جولة، ١٥ ثانية لكل واحدة. هل أنت بطل السرعة؟ ⚡',
+  mixed:  'التحدي الشامل يجمع كل الأنواع — الأبطال الحقيقيون لا يتراجعون! 🔥'
+};
+function selectGameType(t) {
+  ['normal','time','mixed'].forEach(k => {
+    document.getElementById('gt-'+k).classList.toggle('sel', k === t);
+  });
+  document.getElementById('gt-hint').textContent = gtHints[t];
+  updateSessionLine();
+}
+
+/* ---- اختيار الصعوبة ---- */
+function selectDiff(d) {
+  ['easy','mid','hard'].forEach(k => {
+    document.getElementById('diff-'+k).classList.toggle('sel', k === d);
+  });
+  updateSessionLine();
+}
+function getSelected(prefix, keys) {
+  return keys.find(k => document.getElementById(prefix+k)?.classList.contains('sel')) || keys[1];
+}
+function updateSessionLine() {
+  const gt = getSelected('gt-', ['normal','time','mixed']);
+  const df = getSelected('diff-', ['easy','mid','hard']);
+  const names = { normal:'فارس', time:'وقت', mixed:'شامل', easy:'سهل', mid:'متوسط', hard:'صعب' };
+  document.getElementById('session-line').textContent =
+    `٥ تحديات • ${names[df]} • البقرة ٢٨٤–٢٨٦`;
+  document.getElementById('session-sub').textContent = gtHints[gt];
+}
+
+/* ---- بدء التحدي ---- */
+function startQuiz() {
+  currentQ = 0;
+  score = 0;
+  startTime = Date.now();
+  showView('v-quiz');
+  renderQuestion();
+}
+
+/* ---- رسم السؤال ---- */
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const total = QUESTIONS.length;
+  const pct = ((currentQ + 1) / total * 100).toFixed(0);
+
+  document.getElementById('quiz-counter').textContent = `سؤال ${toAr(currentQ + 1)}/${toAr(total)}`;
+  document.getElementById('quiz-pts').innerHTML = `<i class="fa-solid fa-trophy"></i> ${toAr(score * 40)} نقطة`;
+  document.getElementById('quiz-pbar').style.width = pct + '%';
+
+  /* بناء محتوى السؤال */
+  let ayahHtml = '';
+  if (q.type === 'fill') {
+    ayahHtml = `<span class="ayah-txt">${q.before} <span class="ayah-blank"></span> ${q.after}</span>`;
+  } else {
+    ayahHtml = `<span class="ayah-txt">${q.ayah}</span>`;
+  }
+
+  const isFill = q.type === 'fill';
+  const gridClass = isFill ? 'opts-2x2' : 'opts-list';
+
+  const optsHtml = q.opts.map((o, i) =>
+    `<div class="opt${isFill ? '' : ''}" id="opt-${i}" onclick="selectOpt(${i})">${o.text}</div>`
+  ).join('');
+
+  document.getElementById('quiz-content').innerHTML = `
+    <div class="question-card">
+      <div class="q-type-lbl">:${q.label}</div>
+      <div>${ayahHtml}</div>
+    </div>
+    <div class="${gridClass}">${optsHtml}</div>`;
+}
+
+/* ---- اختيار إجابة ---- */
+function selectOpt(idx) {
+  const q = QUESTIONS[currentQ];
+  /* منع التكرار */
+  document.querySelectorAll('.opt').forEach(o => o.classList.add('locked'));
+
+  const chosen = document.getElementById('opt-' + idx);
+  if (q.opts[idx].correct) {
+    chosen.classList.add('correct');
+    score++;
+  } else {
+    chosen.classList.add('wrong');
+    /* أظهر الصحيح */
+    q.opts.forEach((o, i) => {
+      if (o.correct) document.getElementById('opt-' + i).classList.add('correct');
+    });
+  }
+
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < QUESTIONS.length) {
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  }, 1100);
+}
+
+/* ---- النتائج ---- */
+function showResults() {
+  const total = QUESTIONS.length;
+  const pct = score / total;
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
+  const mins = String(Math.floor(elapsed / 60)).padStart(1, '0');
+  const secs = String(elapsed % 60).padStart(2, '0');
+
+  let stars = '⭐⭐⭐', msg = '', sub = '', cls = 'exc';
+  if (pct >= 0.8) {
+    msg = 'عبقري! أنت على درب الأبطال! 🏆'; sub = 'أواخر البقرة ملكتها — لا تتوقف، الأقوى دائماً يتقدم!'; cls = 'exc';
+  } else if (pct >= 0.6) {
+    stars = '⭐⭐'; msg = 'قريب من القمة! 💪 الأبطال لا يستسلمون'; sub = 'راجع الآيات وعُد أقوى — القمة على بُعد خطوة!'; cls = 'good';
+  } else {
+    stars = '⭐'; msg = 'الأبطال يسقطون ويقومون! 🔥'; sub = 'كرّر الحفظ وتحدَّ مجدداً — كل محاولة تقرّبك من النصر!'; cls = 'poor';
+  }
+
+  document.getElementById('res-stars').textContent = stars;
+  document.getElementById('score-circle').className = `score-circle ${cls}`;
+  document.getElementById('res-num').textContent = toAr(score);
+  document.getElementById('res-denom').textContent = `من ${toAr(total)} صحيحة`;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-sub').textContent = sub;
+  document.getElementById('rs-correct').textContent = toAr(score);
+  document.getElementById('rs-pts').textContent = toAr(score * 40);
+  document.getElementById('rs-time').textContent = `${mins}:${secs}`;
+
+  showView('v-results');
+}
+
+/* ---- مساعد الأرقام العربية ---- */
+function toAr(n) {
+  return String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+</script>
+</body>
+</html>
